@@ -52,10 +52,5 @@ public class pagamentoMoedas implements MeioPagamento{
     public double troco() {
         return troco;
     }
-
-    @Override
-    public boolean encerrar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }

@@ -14,5 +14,4 @@ public interface MeioPagamento {
     double saldo();
     void pagar(int valor);
     double troco();
-    boolean encerrar();
 }
