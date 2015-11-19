@@ -11,10 +11,10 @@ package trabtecnicas;
  */
 public class pagamentoCartaoRecarregavel implements MeioPagamento{
 
-        private int creditos;
+        private double creditos;
         
         
-    public pagamentoCartaoRecarregavel(int creditos){
+    public pagamentoCartaoRecarregavel(double creditos){
         this.creditos = creditos;
     }
     
@@ -24,13 +24,18 @@ public class pagamentoCartaoRecarregavel implements MeioPagamento{
     }
 
     @Override
-    public void pagar(int valor) {
+    public void pagar(double valor) {
         creditos -= valor;
     }
 
     @Override
     public double troco() {
         return 0;
+    }
+
+    @Override
+    public Parquimetro.pagamentos getTipo() {
+        return Parquimetro.pagamentos.cartao;
     }
 
 }

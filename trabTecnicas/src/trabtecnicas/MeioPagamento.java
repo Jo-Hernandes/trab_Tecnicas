@@ -11,7 +11,10 @@ package trabtecnicas;
  */
 public interface MeioPagamento {
     
+    
     double saldo();
-    void pagar(int valor);
+    void pagar(double valor);
     double troco();
+    Parquimetro.pagamentos getTipo();
+    
 }

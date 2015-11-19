@@ -10,18 +10,24 @@ import java.util.Date;
  * @author 13280025
  */
 public class TicketEstacionamento {
+    
+    enum pagamentos {moedas, cartao, residente};
+
+        
     private int id;
     private int idParquimetro;
     private String endereco;
     private Date emissao;
     private Date validade;
+    private Parquimetro.pagamentos tipoPagamento;
 
-    public TicketEstacionamento(int id, int idParquimetro, String endereco, Date emissao, Date validade) {
+    public TicketEstacionamento(int id, int idParquimetro, String endereco, Date emissao, Date validade, Parquimetro.pagamentos tipoPagamento) {
         this.id = id;
         this.idParquimetro = idParquimetro;
         this.endereco = endereco;
         this.emissao = emissao;
         this.validade = validade;
+        this.tipoPagamento = tipoPagamento;
     }
 
     public int getId() {
@@ -63,6 +69,18 @@ public class TicketEstacionamento {
     public void setValidade(Date validade) {
         this.validade = validade;
     }
+
+    @Override
+    public String toString() {
+        return idParquimetro + "," + 
+                id + "," + 
+                endereco + "," + 
+                emissao.toString() + "," + 
+                validade.toString() + "," + 
+                tipoPagamento;
+    }
+    
+    
     
     
 }

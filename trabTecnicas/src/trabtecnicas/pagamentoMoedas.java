@@ -16,24 +16,8 @@ public class pagamentoMoedas implements MeioPagamento{
     private double troco;
     
     public pagamentoMoedas(){
-        valorInserido = 0;
     }
-    
-    public void adicionarMoeda(int tipo){
-        switch (tipo) {
-            case 1 :    valorInserido += 0.5;
-                        break;
-            case 2 :    valorInserido += 0.10;
-                        break;
-            case 3 :    valorInserido += 0.25;
-                        break;
-            case 4 :    valorInserido += 0.50;
-                        break;
-            case 5 :    valorInserido += 1.00;
-                        break;
-            default : System.err.println("moeda nao suportada");
-        }
-    }
+
     
     @Override
     public double saldo() {
@@ -41,10 +25,13 @@ public class pagamentoMoedas implements MeioPagamento{
     }
 
     @Override
-    public void pagar(int valor) {
-        custoEstacionamento -= valor;
-        if (custoEstacionamento < 0){
-            troco = Math.abs(custoEstacionamento);
+    public void pagar(double valor) {
+        if (valorInserido - valor <= 0){
+            valorInserido -= valor;
+            troco = Math.abs(valorInserido);
+        }
+        else {
+            System.out.println("valor insuficiente");
         }
     }
 
@@ -53,4 +40,12 @@ public class pagamentoMoedas implements MeioPagamento{
         return troco;
     }
     
+    public void setValorInserido(double valor){
+        valorInserido = valor;
+    }
+
+    @Override
+    public Parquimetro.pagamentos getTipo() {
+        return Parquimetro.pagamentos.moedas;
+    }
 }

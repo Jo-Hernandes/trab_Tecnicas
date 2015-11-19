@@ -27,52 +27,64 @@ public class Parquimetro {
     private double valorIncremento = 0.25;
     private int idParquimetro;
     private String endereco;
+    private int quantIncrementos;
+    private MeioPagamento pagamento;
+    private double valorInserido = 0;
 
     public Parquimetro(int idParquimetro, String endereco) {
         this.idParquimetro = idParquimetro;
         this.endereco = endereco;
-    }
-    
-    public void incrementarValidade(TicketEstacionamento ticket){
-        ticket.setValidade(new Date (ticket.getValidade().getTime()+ 600000));
+        incremento = 0;
     }
     
     
-    public void decrementarValidade(TicketEstacionamento ticket){
-        ticket.setValidade(new Date (ticket.getValidade().getTime() - 600000));
+    public void definirPagamento(FactoryPagamento.pagamentos tipo){
+        pagamento = FactoryPagamento.getInstance().tipoPagamento(tipo);
     }
     
     
-    public TicketEstacionamento iniciarOperacao(TicketEstacionamento.pagamentos tipo){
-        Date horaInicial = new Date();
-        TicketEstacionamento aux = new TicketEstacionamento(randomInteger(10000, 99999), this.idParquimetro, this.endereco, horaInicial, new Date(horaInicial.getTime() + 1800000), tipo);
-        boolean emOperacao = true;
-        //create the Scanner
-        Scanner terminalInput = new Scanner(System.in);
-
-        do {
-            System.out.println("Digite + para incrementar, - para decrementar, 0 para terminar a operacao e 1 para cancelar");
-            String s = terminalInput.nextLine();
-            
-            switch (s){
-            case "+" : incrementarValidade(aux);
-                        break;
-            case "-" : decrementarValidade(aux);
-                        break;
-            case "0" : emOperacao = false;
-                        break;
-            case "1" : System.out.println("Operacao cancelada");
-                       return null;
-
-            default : System.out.println("Comando invalido");
-            }
-            
-        }while(emOperacao);
+    public void incrementarValidade(){
+        incremento++;
+    }
+    
         
-           
+    public void decrementarValidade(){
+        if (incremento > 0) incremento--;
+    }
+    
+
+        public void adicionarMoeda(int tipo){
+        switch (tipo) {
+            case 1 :    valorInserido += 0.5;
+                        break;
+            case 2 :    valorInserido += 0.10;
+                        break;
+            case 3 :    valorInserido += 0.25;
+                        break;
+            case 4 :    valorInserido += 0.50;
+                        break;
+            case 5 :    valorInserido += 1.00;
+                        break;
+            default : System.err.println("moeda nao suportada");
+        }
+    }
+    
+    
+    public TicketEstacionamento gerarTicket(){
+        double valorTotal = valorBase + (valorIncremento * quantIncrementos);
+        if (pagamento instanceof pagamentoMoedas){
+            valorTotal-= valorInserido;
+        }
+        pagamento.pagar(valorTotal);
+        if (pagamento.saldo() > 0){
+            System.out.println("valor de troco : " + pagamento.troco());
+        }
+        Date dataAtual = new Date();
+        TicketEstacionamento aux = new TicketEstacionamento(randomInteger(10000, 99999), this.idParquimetro, this.endereco, dataAtual, new Date(dataAtual.getTime() + (minTime * 60000) + ((quantIncrementos * quantIncrementos) * 60000)), pagamento.getTipo());
+        FileWriterFacade.getInstance().saveTicket(this.idParquimetro, aux);
+        
+        
         return aux;
-        
-       
     }
     
     

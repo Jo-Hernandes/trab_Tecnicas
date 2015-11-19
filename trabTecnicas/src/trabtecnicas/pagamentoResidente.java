@@ -12,9 +12,7 @@ package trabtecnicas;
 public class pagamentoResidente implements MeioPagamento{
 
     
-    public pagamentoResidente(){
-        
-    }
+    public pagamentoResidente(){}
     
     @Override
     public double saldo() {
@@ -22,13 +20,18 @@ public class pagamentoResidente implements MeioPagamento{
     }
 
     @Override
-    public void pagar(int valor) {
+    public void pagar(double valor) {
         // pago
     }
 
     @Override
     public double troco() {
         return 0;
+    }
+
+    @Override
+    public Parquimetro.pagamentos getTipo() {
+        return Parquimetro.pagamentos.residente;
     }
     
 }
