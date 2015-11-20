@@ -60,6 +60,8 @@ public class ParquimetroTest {
         instance.incrementarValidade();
         assertEquals(1, instance.getIncrementos());
     }
+    
+
 
     /**
      * Test of decrementarValidade method, of class Parquimetro.
@@ -74,6 +76,18 @@ public class ParquimetroTest {
         
     }
     
+        @Test
+        public void testDecrementarValidade2() {
+        System.out.println("decrementarValidade");
+        Parquimetro instance = new Parquimetro(0001, "rua dos bobos numero 1");
+        instance.incrementarValidade();
+        instance.incrementarValidade();
+        instance.incrementarValidade();
+        instance.decrementarValidade();
+        // TODO review the generated test code and remove the default call to fail.
+        assertEquals(2, instance.getIncrementos());
+        
+    }
 
     /**
      * Test of adicionarMoeda method, of class Parquimetro.
@@ -86,8 +100,20 @@ public class ParquimetroTest {
         instance.adicionarMoeda(1);
         assertEquals(tipo, instance.getValorInserido(), 0.1);
         // TODO review the generated test code and remove the default call to fail.
-
     }
+    
+    @Test
+    public void testAdicionarMoeda2() {
+        System.out.println("adicionarMoeda");
+        double tipo = 0.0;
+        Parquimetro instance = new Parquimetro(0001, "rua dos bobos nº 0");
+        instance.adicionarMoeda(69);
+        assertEquals(tipo, instance.getValorInserido(), 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+    }
+
+    
+    
     
 
     /**
@@ -96,11 +122,17 @@ public class ParquimetroTest {
     @Test
     public void testGerarTicket() {
         System.out.println("gerarTicket");
-        Parquimetro instance = new Parquimetro(010, "rua joao sem braco 01");
+        Parquimetro instance = new Parquimetro(010, "rua joao sem braco 001");
         instance.definirPagamento(FactoryPagamento.pagamentos.residente);
         assertNotNull(instance.gerarTicket());
         // TODO review the generated test code and remove the default call to fail.
-        
+    }
+    
+    public void testGerarTicket2() {
+        System.out.println("gerarTicket");
+        Parquimetro instance = new Parquimetro(010, "rua joao sem braco 01");
+        assertNull(instance.gerarTicket());
+        // TODO review the generated test code and remove the default call to fail.
     }
 
     /**

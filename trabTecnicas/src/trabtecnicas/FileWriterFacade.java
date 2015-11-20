@@ -39,7 +39,7 @@ public class FileWriterFacade {
         String endereco = "C:/Games/" + parquimetroID + ".txt";
         FileWriter w = null;
         try {
-            w = new FileWriter(endereco);
+            w = new FileWriter(endereco, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,6 +48,7 @@ public class FileWriterFacade {
 
         try {
             wr.write(ticket.toString());
+            bw.newLine();
             wr.close();
             bw.close();
         } catch (IOException e) {
@@ -69,7 +70,7 @@ public class FileWriterFacade {
         BufferedReader bf = new BufferedReader(fr);
         String file = "";
         try {
-            while ((file = bf.readLine()) != null) {
+            while ((file = bf.readLine()) != null || (file = bf.readLine()) != "") {
                 String[] aux = file.trim().split(",");
                 // ordem do string do ticket: 
                 // idParquimetro   id   endereco  emissao validade tipoPagamento;
