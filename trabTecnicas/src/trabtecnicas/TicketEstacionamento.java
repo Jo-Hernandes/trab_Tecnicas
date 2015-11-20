@@ -19,9 +19,9 @@ public class TicketEstacionamento {
     private String endereco;
     private Date emissao;
     private Date validade;
-    private Parquimetro.pagamentos tipoPagamento;
+    private FactoryPagamento.pagamentos tipoPagamento;
 
-    public TicketEstacionamento(int id, int idParquimetro, String endereco, Date emissao, Date validade, Parquimetro.pagamentos tipoPagamento) {
+    public TicketEstacionamento(int id, int idParquimetro, String endereco, Date emissao, Date validade, FactoryPagamento.pagamentos tipoPagamento) {
         this.id = id;
         this.idParquimetro = idParquimetro;
         this.endereco = endereco;

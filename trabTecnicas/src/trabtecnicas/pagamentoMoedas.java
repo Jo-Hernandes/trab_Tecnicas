@@ -45,7 +45,12 @@ public class pagamentoMoedas implements MeioPagamento{
     }
 
     @Override
-    public Parquimetro.pagamentos getTipo() {
-        return Parquimetro.pagamentos.moedas;
+    public FactoryPagamento.pagamentos getTipo() {
+        return FactoryPagamento.pagamentos.moedas;
+    }
+
+    @Override
+    public void adicionarSaldo(double valor) {
+        this.valorInserido = valor;
     }
 }

@@ -34,8 +34,13 @@ public class pagamentoCartaoRecarregavel implements MeioPagamento{
     }
 
     @Override
-    public Parquimetro.pagamentos getTipo() {
-        return Parquimetro.pagamentos.cartao;
+    public FactoryPagamento.pagamentos getTipo() {
+        return FactoryPagamento.pagamentos.cartao;
+    }
+
+    @Override
+    public void adicionarSaldo(double valor) {
+        creditos += valor;
     }
 
 }

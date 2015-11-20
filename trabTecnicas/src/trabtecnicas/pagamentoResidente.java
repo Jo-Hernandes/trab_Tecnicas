@@ -16,12 +16,11 @@ public class pagamentoResidente implements MeioPagamento{
     
     @Override
     public double saldo() {
-        return 0;
+        return Double.MAX_VALUE;
     }
 
     @Override
     public void pagar(double valor) {
-        // pago
     }
 
     @Override
@@ -30,8 +29,13 @@ public class pagamentoResidente implements MeioPagamento{
     }
 
     @Override
-    public Parquimetro.pagamentos getTipo() {
-        return Parquimetro.pagamentos.residente;
+    public FactoryPagamento.pagamentos getTipo() {
+        return FactoryPagamento.pagamentos.residente;
     }
+
+    @Override
+    public void adicionarSaldo(double valor) {}
+    
+  
     
 }

@@ -15,6 +15,7 @@ public interface MeioPagamento {
     double saldo();
     void pagar(double valor);
     double troco();
-    Parquimetro.pagamentos getTipo();
+    void adicionarSaldo(double valor);
+    FactoryPagamento.pagamentos getTipo();
     
 }

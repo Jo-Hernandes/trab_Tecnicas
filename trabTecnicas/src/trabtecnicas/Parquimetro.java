@@ -15,16 +15,16 @@ import java.util.Scanner;
  * @author 13280025
  */
 public class Parquimetro {
-    
-    enum pagamentos {moedas, cartao, residente};
 
-    private Date inicioTarifacao = new Date(0, 0, 0, 8, 30);
-    private Date finalTarifacao = new Date(0, 0, 0, 18, 30);
-    private int minTime = 30;
-    private int maxTime = 120;
+    
+
+    private final Date inicioTarifacao = new Date(0, 0, 0, 8, 30);
+    private final Date finalTarifacao = new Date(0, 0, 0, 18, 30);
+    private final int minTime = 30;
+    private final int maxTime = 120;
     private int incremento = 10;
-    private double valorBase = 0.75;
-    private double valorIncremento = 0.25;
+    private final double valorBase = 0.75;
+    private final double valorIncremento = 0.25;
     private int idParquimetro;
     private String endereco;
     private int quantIncrementos;
@@ -44,12 +44,12 @@ public class Parquimetro {
     
     
     public void incrementarValidade(){
-        incremento++;
+        quantIncrementos++;
     }
     
         
     public void decrementarValidade(){
-        if (incremento > 0) incremento--;
+        if (quantIncrementos > 0) quantIncrementos--;
     }
     
 
@@ -71,18 +71,27 @@ public class Parquimetro {
     
     
     public TicketEstacionamento gerarTicket(){
+        if (pagamento == null) {
+            System.out.println("favor definir forma de pagamento");
+            return null;
+                    
+        }
+        
+        pagamento.adicionarSaldo(valorInserido);
         double valorTotal = valorBase + (valorIncremento * quantIncrementos);
         if (pagamento instanceof pagamentoMoedas){
             valorTotal-= valorInserido;
         }
         pagamento.pagar(valorTotal);
+        
         if (pagamento.saldo() > 0){
             System.out.println("valor de troco : " + pagamento.troco());
         }
         Date dataAtual = new Date();
-        TicketEstacionamento aux = new TicketEstacionamento(randomInteger(10000, 99999), this.idParquimetro, this.endereco, dataAtual, new Date(dataAtual.getTime() + (minTime * 60000) + ((quantIncrementos * quantIncrementos) * 60000)), pagamento.getTipo());
+        TicketEstacionamento aux = new TicketEstacionamento(geraTickedID(10000, 99999), this.idParquimetro, this.endereco, dataAtual, new Date(dataAtual.getTime() + (minTime * 60000) + ((quantIncrementos * quantIncrementos) * 60000)), pagamento.getTipo());
         FileWriterFacade.getInstance().saveTicket(this.idParquimetro, aux);
         
+        resetParquimetroData();
         
         return aux;
     }
@@ -90,7 +99,7 @@ public class Parquimetro {
     
     // operacao random de apoio
     
-    public int randomInteger(int min, int max) {
+    public int geraTickedID(int min, int max) {
 
     Random rand = new Random();
 
@@ -99,6 +108,25 @@ public class Parquimetro {
 
     return randomNum;
 }
+    
+    private void resetParquimetroData() {
+        valorInserido = 0;
+        quantIncrementos = 0;
+        pagamento = null;
+        
+    }
 
-      
+    public double getValorInserido(){
+        return valorInserido;
+    }
+ 
+    public int getIncrementos(){
+        return quantIncrementos;
+    }
+    
+    public FactoryPagamento.pagamentos getTipoPagamento(){
+        return pagamento.getTipo();
+    }
+
+    
 }

@@ -24,7 +24,7 @@ public class FileWriterFacade {
     
     static FileWriterFacade instance;
     
-    private void FileWriterFacare(){
+    private void FileWriterFacade(){
     }
     
     static FileWriterFacade getInstance(){
@@ -36,7 +36,7 @@ public class FileWriterFacade {
 
 
     public void saveTicket(int parquimetroID, TicketEstacionamento ticket){
-        String endereco = "C:/" + parquimetroID + ".txt";
+        String endereco = "C:/Games/" + parquimetroID + ".txt";
         FileWriter w = null;
         try {
             w = new FileWriter(endereco);
@@ -80,7 +80,7 @@ public class FileWriterFacade {
                                                            aux[2], 
                                                            new Date(aux[3]), 
                                                            new Date(aux[4]),
-                                                           Parquimetro.pagamentos.valueOf(aux[5])));
+                                                           FactoryPagamento.pagamentos.valueOf(aux[5])));
                                     
             }
             bf.close();
